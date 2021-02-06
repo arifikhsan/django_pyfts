@@ -19,8 +19,8 @@ def index(request):
     model = chen.ConventionalFTS(partitioner=fs)
     model.fit(train)
     # print(aa)
-    # forecasts = model.predict(test)
-    forecasts = model.predict([18876])
+    forecasts = model.predict(test)
+    # forecasts = model.predict([18876])
 
     # data = {'message': 'Hello world', 'train': aa }
     data = {'message': 'Hello world', 'train': aa, 'forecast': forecasts}
