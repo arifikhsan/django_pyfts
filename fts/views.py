@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
+from django.http import JsonResponse
+# from pyFTS.data import Enrollments
 
 def index(request):
-    return HttpResponse('Hello, world. You\'re at the fts index.')
+    # print(Enrollments.get_dataframe())
+    # print(pyFTS)
+    data = {'message': 'Hello world'}
+    return JsonResponse(data)
