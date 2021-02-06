@@ -13,21 +13,11 @@ def index(request):
     test = Enrollments.get_data()
     df = Enrollments.get_dataframe()
 
-    # data = df['Enrollments'].values
-    # print(df['Enrollments'].values)
-    # universe of discosure partitioner
     fs = Grid.GridPartitioner(data=train, npart=10)
-    # create an empty model using the Chen(1996) method
     model = chen.ConventionalFTS(partitioner=fs)
-    # the training procedure is performed by the method fit
     model.fit(train)
-    # model.fit(data)
-    # print the model rules
     # print(model)
-    # the forecasting procedure is performed bu the method predict
-    # forecasts = model.predict(test)
+    forecasts = model.predict(test)
 
-    # print(Enrollments.get_dataframe())
-    # print(pyFTS)
     data = {'message': 'Hello world'}
     return JsonResponse(data)
