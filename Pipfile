@@ -9,8 +9,11 @@ djangorestframework = "*"
 django-cors-headers = "*"
 pyFTS = "*"
 gunicorn = "*"
-django-heroku = "*"
 whitenoise = "*"
+pandas = "*"
+scipy = "*"
+matplotlib = "*"
+dill = "*"
 
 [dev-packages]
 
