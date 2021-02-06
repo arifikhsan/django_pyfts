@@ -19,5 +19,6 @@ def index(request):
     # print(model)
     forecasts = model.predict(test)
 
-    data = {'message': 'Hello world'}
+    data = {'message': 'Hello world', 'forecast': forecasts}
+
     return JsonResponse(data)
