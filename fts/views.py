@@ -5,7 +5,6 @@ from pyFTS.data import Enrollments
 from pyFTS.partitioners import Grid
 from pyFTS.models import chen
 import warnings
-import numpy
 
 def index(request):
     warnings.filterwarnings('ignore')
@@ -14,12 +13,12 @@ def index(request):
     test = Enrollments.get_data()
     df = Enrollments.get_dataframe()
 
-    data = df['Enrollments'].values
+    # data = df['Enrollments'].values
     # print(df['Enrollments'].values)
     # universe of discosure partitioner
-    partitioner = Grid.GridPartitioner(data=train, npart=10)
+    fs = Grid.GridPartitioner(data=train, npart=10)
     # create an empty model using the Chen(1996) method
-    model = chen.ConventionalFTS(partitioner=partitioner)
+    model = chen.ConventionalFTS(partitioner=fs)
     # the training procedure is performed by the method fit
     model.fit(train)
     # model.fit(data)
