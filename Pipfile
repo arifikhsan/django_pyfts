@@ -4,16 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
-pyFTS = "*"
 gunicorn = "*"
 whitenoise = "*"
 pandas = "*"
 scipy = "*"
 matplotlib = "*"
 dill = "*"
+Django = "*"
+pyFTS = "*"
+numpy = "*"
 
 [dev-packages]
 
