@@ -50,6 +50,6 @@ def __fts(train, test):
     # forecasts = model.predict([18876])
 
     # data = {'message': 'Hello world' }
-    data = {'train': train.tolist(), 'test': test.tolist(), 'forecast': forecasts}
+    data = {'train': train, 'test': test, 'forecast': forecasts}
 
     return JsonResponse(data)
