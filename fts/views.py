@@ -57,7 +57,7 @@ def __fts(train, test, model_type='chen'):
     if model_type == 'chen':
         model = chen.ConventionalFTS(partitioner=fs)
     elif model_type == 'cheng':
-        model = cheng.TrendWeightedFTS(partitioner=fs)
+        model = cheng.TrendWeightedFTS(partitioner=Grid.GridPartitioner(data=train, npart=7))
     else:
         model = chen.ConventionalFTS(partitioner=fs)
 
