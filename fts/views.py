@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from pyFTS.data import Enrollments
 from pyFTS.partitioners import Grid
-from pyFTS.models import chen
+from pyFTS.models import chen, cheng
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -38,18 +38,32 @@ def dynamic(request):
 
     return __fts(train, test)
 
-def __fts(train, test):
+@csrf_exempt
+@require_POST
+def model_cheng(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+
+    train = body['train']
+    test = body['test']
+
+    return __fts(train, test, 'cheng')
+
+def __fts(train, test, model_type='chen'):
     df = Enrollments.get_dataframe()
     # aa = df['Enrollments'].values.tolist()
 
     fs = Grid.GridPartitioner(data=train, npart=10)
-    model = chen.ConventionalFTS(partitioner=fs)
-    # print(aa)
+    if model_type == 'chen':
+        model = chen.ConventionalFTS(partitioner=fs)
+    elif model_type == 'cheng':
+        model = cheng.TrendWeightedFTS(partitioner=fs)
+    else:
+        model = chen.ConventionalFTS(partitioner=fs)
+
     model.fit(train)
     forecasts = model.predict(test)
-    # forecasts = model.predict([18876])
 
     # data = {'message': 'Hello world' }
     data = {'train': train, 'test': test, 'forecast': forecasts}
-
     return JsonResponse(data)
