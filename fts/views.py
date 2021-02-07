@@ -6,9 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from pyFTS.data import Enrollments
 from pyFTS.partitioners import Grid
 from pyFTS.models import chen, cheng
+from pyFTS.benchmarks.Measures import rmse
 from rest_framework import status
 from rest_framework.response import Response
-
 import json
 import warnings
 
@@ -57,13 +57,19 @@ def __fts(train, test, model_type='chen'):
     if model_type == 'chen':
         model = chen.ConventionalFTS(partitioner=fs)
     elif model_type == 'cheng':
-        model = cheng.TrendWeightedFTS(partitioner=Grid.GridPartitioner(data=train, npart=7))
+        model = cheng.TrendWeightedFTS(partitioner=fs)
     else:
         model = chen.ConventionalFTS(partitioner=fs)
 
     model.fit(train)
     forecasts = model.predict(test)
+    er = rmse(train, forecasts)
 
     # data = {'message': 'Hello world' }
-    data = {'train': train, 'test': test, 'forecast': forecasts}
+    data = {
+        'train': train,
+        'test': test,
+        'forecast': forecasts,
+        'rmse': er
+    }
     return JsonResponse(data)
