@@ -60,8 +60,8 @@ def __fts(train, test, model_type='chen'):
 
     # print(train)
     data = {
-        'train': train.values.tolist(),
-        'test': test.values.tolist(),
+        'train': train,
+        'test': test,
         'forecast': forecasts,
         # 'rmse': er
     }
