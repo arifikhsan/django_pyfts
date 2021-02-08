@@ -30,30 +30,23 @@ def dynamic(request):
     train = body['train']
     test = body['test']
 
-    # print(test)
-    # print(request.body['train'])
-
-    # data = {'message': 'Aaaa'}
-    # return JsonResponse(data)
-
     return __fts(train, test)
 
 @csrf_exempt
 @require_POST
-def model_cheng(request):
+def predict(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
     train = body['train']
     test = body['test']
+    mode = body['mode']
 
-    return __fts(train, test, 'cheng')
+    return __fts(train, test, mode)
 
 def __fts(train, test, model_type='chen'):
-    df = Enrollments.get_dataframe()
-    # aa = df['Enrollments'].values.tolist()
-
     fs = Grid.GridPartitioner(data=train, npart=10)
+
     if model_type == 'chen':
         model = chen.ConventionalFTS(partitioner=fs)
     elif model_type == 'cheng':
@@ -65,11 +58,11 @@ def __fts(train, test, model_type='chen'):
     forecasts = model.predict(test)
     er = rmse(train, forecasts)
 
-    # data = {'message': 'Hello world' }
+    # print(train)
     data = {
-        'train': train,
-        'test': test,
+        'train': train.tolist(),
+        'test': test.tolist(),
         'forecast': forecasts,
-        'rmse': er
+        # 'rmse': er
     }
     return JsonResponse(data)
