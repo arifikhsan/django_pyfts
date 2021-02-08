@@ -17,7 +17,7 @@ def index(request):
     warnings.filterwarnings('ignore')
 
     train = Enrollments.get_data()
-    test = train
+    test = Enrollments.get_data()
 
     return __fts(train, test)
 
